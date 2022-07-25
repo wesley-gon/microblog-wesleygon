@@ -1,5 +1,7 @@
 <?php
 namespace Microblog;
+
+use LDAP\Result;
 use PDO, Exception;
 
 final class Usuario {
@@ -44,9 +46,54 @@ final class Usuario {
         }
     }
 
+    public function listarUM(): array {
+        $sql = "SELECT * FROM usuarios WHERE id = :id";
+
+        try {
+            $consulta = $this->conexao->prepare($sql);
+            $consulta->bindParam(":id", $this->id, PDO::PARAM_INT);
+            $consulta->execute();
+            $resultado = $consulta->fetch(PDO::FETCH_ASSOC);
+        } catch (Exception $erro){
+            die("Erro: ". $erro->getMessage());
+        }
+        return $resultado;
+    }
+
+    public function atualizar():void {
+        $sql = "UPDATE usuarios SET nome = :nome, email = :email,  senha = :senha, tipo = :tipo WHERE id = :id";
+
+
+        try {
+            $consulta = $this->conexao->prepare($sql);
+            $consulta->bindParam(":nome", $this->nome, PDO::PARAM_STR);
+            $consulta->bindParam(":email", $this->email, PDO::PARAM_STR);
+            $consulta->bindParam(":senha", $this->senha, PDO::PARAM_STR);
+            $consulta->bindParam(":tipo", $this->tipo, PDO::PARAM_STR);
+            $consulta->bindParam(":id", $this->id, PDO::PARAM_INT);
+            $consulta->execute();
+        } catch (Exception $erro){
+            die("Erro: ". $erro->getMessage());
+        
+        }
+    }
 
     public function codificaSenha (string $senha):string {
         return password_hash($senha, PASSWORD_DEFAULT);
+
+    }
+
+    public function verificaSenha(string $senhaFormulario, string $senhaBanco):string {
+
+        /* Usamos a password_verify para COMPARAR as duas senhas a digitada no formulário e a existente no banco*/
+        if ( password_verify($senhaFormulario, $senhaBanco) ) {
+        // Se forem iguais, mantemos a senha existente no banco 
+            return $senhaBanco;
+        } else {
+        // Se forem diferentes, então codificamos esta nova senha e armazenamos
+            return $this->codificaSenha($senhaFormulario);
+        }
+                
 
     }
 
