@@ -25,11 +25,14 @@ if(isset($_POST['atualizar'])){
 			//$usuario->setSenha()
 			$usuario->setSenha( $usuario->verificaSenha($_POST['senha'], $dados['senha']) );
 		}
+
+
+		$usuario->atualizar();
+		header("location:usuario.php");
 	}
 
 	
-	$usuario->atualizar();
-	header("location:usuario.php");
+
 
 
 ?>

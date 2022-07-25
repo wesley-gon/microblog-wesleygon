@@ -4,6 +4,7 @@ namespace Microblog;
 use LDAP\Result;
 use PDO, Exception;
 
+
 final class Usuario {
     private int $id;
     private string $nome;
