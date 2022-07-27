@@ -1,6 +1,12 @@
 <?php
+
+use Microblog\ControleDeAcesso;
 use Microblog\Usuario;
 require_once "../vendor/autoload.php";
+
+$sessao = new ControleDeAcesso;
+$sessao->verificaAcesso();
+
 
 // Criado objeto para poder acessar os recursos da classe
 $usuario = new Usuario; // não esquecer altoload e do namespace

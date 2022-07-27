@@ -1,5 +1,19 @@
 <?php
+
+use Microblog\ControleDeAcesso;
+
 require_once "../vendor/autoload.php";
+
+//Criado o objeto para acessar os recursos de sessão PHP na classe ControleDeAcesso
+$sessao = new ControleDeAcesso;
+
+// Execução verificaAcesso paa checar se tem alguém logado
+$sessao->verificaAcesso();
+
+
+
+
+
 $pagina = basename($_SERVER['PHP_SELF']);
 ?>
 <!DOCTYPE html>
