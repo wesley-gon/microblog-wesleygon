@@ -28,7 +28,7 @@ if(isset($_POST['atualizar'])){
 
 
 		$usuario->atualizar();
-		header("location:usuario.php");
+		header("location:usuarios.php");
 	}
 
 	
@@ -49,7 +49,7 @@ if(isset($_POST['atualizar'])){
 
 			<div class="mb-3">
 				<label class="form-label" for="nome">Nome:</label>
-				<input value=<?=$dados['nome']   ?> class="form-control" type="text" id="nome" name="nome" required>
+				<input value="<?=$dados['nome']?>" class="form-control" type="text" id="nome" name="nome" required>
 
 			</div>
 
