@@ -1,5 +1,22 @@
 <?php 
+use Microblog\Usuario;
+use Microblog\Utilitarios;
+
 require_once "inc/cabecalho.php";
+
+// mensagens de feedback relacionadas ao acesso
+
+if( isset($_GET['acesso_proibido']) ) {
+	$feedback = 'Você deve estar logado para seguir com a ação <span> <i class="bi bi-emoji-dizzy-fill"></i> </span>';
+
+} elseif( isset($_GET['campos_obrigatorios']) ) {
+	$feedback = 'Você deve preencher os dois campos! <i class="bi bi-menu-button-fill"></i> ';
+}
+elseif( isset($_GET['nao_encontrado']) ) {
+	$feedback = 'Este usuário não existe no banco de dados <i class="bi bi-sign-stop"></i> ';
+}
+
+
 ?>
 
 
@@ -10,7 +27,7 @@ require_once "inc/cabecalho.php";
         <form action="" method="post" id="form-login" name="form-login" class="mx-auto w-50">
 
                 <?php if(isset($feedback)){?>
-				<p class="my-2 alert alert-warning text-center">
+				<p  class="my-2 alert alert-warning text-center"> <?=$feedback?>
 				</p>
                 <?php } ?>
 
@@ -26,6 +43,40 @@ require_once "inc/cabecalho.php";
 				<button class="btn btn-primary btn-lg" name="entrar" type="submit">Entrar</button>
 
 			</form>
+
+
+<?php
+if( isset($_POST['entrar']) ){
+
+	//verificação de campos do forumário
+	if(empty($_POST['email']) || empty($_POST['senha']) ){
+		header("location:login.php?campos_obrigatorios");
+	} else {
+		// capiturando o e-mail informado
+		$usuario = new Usuario;
+		$usuario->setEmail($_POST['email']);
+
+		// Consulta que vai buscar se o usuário esta no banco a partir do e-mail selecionado
+		$dados = $usuario->buscar();
+		
+		// se dados fior falso., ou seja, n~~ao tem dados cadastrados do e-mail informado.
+		if(!$dados) {
+			//então  fica no login e d uma feedback
+			header("location:login.php?nao_encontrado");
+			//echo "Não tem nínguem com estes dados!"; (usado para testar)
+		} else {
+			// Verificação da senha e login 
+			if( password_verify($_POST['senha'], $dados['senha']) ){
+				echo "pode entrar";
+			} else {
+				echo "cai fora!";
+			}
+		}
+
+	}
+}
+
+?>
     </div>
     
     
