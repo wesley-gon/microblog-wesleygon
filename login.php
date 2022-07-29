@@ -1,4 +1,6 @@
-<?php 
+<?php
+
+use Microblog\ControleDeAcesso;
 use Microblog\Usuario;
 use Microblog\Utilitarios;
 
@@ -14,6 +16,12 @@ if( isset($_GET['acesso_proibido']) ) {
 }
 elseif( isset($_GET['nao_encontrado']) ) {
 	$feedback = 'Este usuário não existe no banco de dados <i class="bi bi-sign-stop"></i> ';
+}
+elseif( isset($_GET['senha_incorreta']) ) {
+	$feedback = 'Os dados estão incorretos, tente novamente <i class="bi bi-slash-circle-fill"></i> ';
+}
+elseif( isset($_GET['logout']) ) {
+	$feedback = 'Você saiu da área logada <i class="bi bi-x-square-fill"></i> ';
 }
 
 
@@ -59,17 +67,21 @@ if( isset($_POST['entrar']) ){
 		// Consulta que vai buscar se o usuário esta no banco a partir do e-mail selecionado
 		$dados = $usuario->buscar();
 		
-		// se dados fior falso., ou seja, n~~ao tem dados cadastrados do e-mail informado.
+		// se dados for falso., ou seja, não tem dados cadastrados do e-mail informado.
 		if(!$dados) {
-			//então  fica no login e d uma feedback
+			//então  fica no login e da uma feedback
 			header("location:login.php?nao_encontrado");
 			//echo "Não tem nínguem com estes dados!"; (usado para testar)
 		} else {
 			// Verificação da senha e login 
 			if( password_verify($_POST['senha'], $dados['senha']) ){
-				echo "pode entrar";
+				//Estando certo, será feito o login
+				$sessao = new ControleDeAcesso;
+				$sessao->login($dados['id'], $dados['nome'], $dados['tipo']);
+				header("location:admin/index.php");
 			} else {
-				echo "cai fora!";
+				//Caso contrário, mantenha na pagina e login e apresente uma mensagem
+				header("location:login.php?senha_incorreta");
 			}
 		}
 
