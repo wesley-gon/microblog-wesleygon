@@ -6,3 +6,6 @@ use Microblog\ControleDeAcesso;
 
 $sessao = new ControleDeAcesso;
 $sessao->verificaAcesso();
+
+$sessao = new ControleDeAcesso;
+$sessao->verificaAcessoAdmin();
