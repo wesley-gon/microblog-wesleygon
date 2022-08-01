@@ -1,6 +1,6 @@
 <?php 
 require_once "../inc/cabecalho-admin.php";
-$sessao->verificaAcessoAdmin();
+// $sessao->verificaAcessoAdmin();
 
 ?>
 
@@ -44,6 +44,7 @@ $sessao->verificaAcessoAdmin();
 							</a>
 						</td>
 					</tr>
+					
 
 				</tbody>                
 			</table>
