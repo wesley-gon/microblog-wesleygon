@@ -9,6 +9,11 @@ $dados = $usuario->listarUM();
 
 if(isset($_POST['atualizar'])){
 	$usuario->setNome($_POST['nome']);
+
+	// Atualizando o valor da variável de sessão ao pegar o novo nome.
+	//Isso garante a atualização em tempo real
+	$_SESSION['nome'] = $usuario->getNome();
+
 	$usuario->setEmail($_POST['email']);
 	$usuario->setTipo($_SESSION['tipo']);
 

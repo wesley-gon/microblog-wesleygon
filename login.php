@@ -23,6 +23,10 @@ elseif( isset($_GET['senha_incorreta']) ) {
 elseif( isset($_GET['logout']) ) {
 	$feedback = 'Você saiu da área logada <i class="bi bi-x-square-fill"></i> ';
 }
+elseif( isset($_GET['perfil_atualizado']) ) {
+	$feedback = 'Seus dados foram atualizados <i class="bi bi-x-square-fill"></i> ';
+
+}
 
 
 ?>
