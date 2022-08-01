@@ -1,7 +1,7 @@
 <?php
 namespace Microblog;
 
-use LDAP\Result;
+
 use PDO, Exception;
 
 
