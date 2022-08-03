@@ -13,17 +13,17 @@ $noticia = new Noticia;
 if(isset($_POST['inserir'])){
 	$noticia = new Noticia;
 	$noticia->setTitulo($_POST['titulo']);
-	$noticia->setTexto($_POST['testo']);
+	$noticia->setTexto($_POST['texto']);
 	$noticia->setResumo($_POST['resumo']);
 	$noticia->setDestaque($_POST['destaque']);
 	$noticia->setCategoriaId($_POST['categoria']);
-	$noticia->setImagem($_POST['imagem']);
+	$noticia->setImagem("uma imagem qualquer ");
 
 	/* aplicando o id do usário logado na sessão à propriedade id da classe/objeto Usuario */
 
 	$noticia->usuario->setId($_SESSION['id']);
 
-	Utilitarios::dump();
+	Utilitarios::dump($noticia);
 }
 ?>
 

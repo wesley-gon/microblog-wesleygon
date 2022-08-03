@@ -1,6 +1,5 @@
 <?php
 namespace Microblog;
-
 use PDO, Exception;
 
 
@@ -48,7 +47,7 @@ final class Noticia {
             Obs: bindParam pode ser usado, mas há riscos de erro devido a forma com oele é executado pelo PHP.
             Por isso, recomenda-se o uso do bindValue em situações como essa.  */
 
-            $consulta->bindParam(":usuario_id", $this->usuario->getId(), PDO::PARAM_INT);
+            $consulta->bindValue(":usuario_id", $this->usuario->getId(), PDO::PARAM_INT);
             $consulta->execute();
 
             } catch (Exception $erro) {
