@@ -47,8 +47,8 @@ final class Noticia {
             E só depois atribuimos ele ao parâmentro :usuario_id usando para isso o bindValue. 
             Obs: bindParam pode ser usado, mas há riscos de erro devido a forma com oele é executado pelo PHP.
             Por isso, recomenda-se o uso do bindValue em situações como essa.  */
-            
-            $consulta->bindParam(":usuario_id" $this->usuario->getId(), PDO::PARAM_INT )
+
+            $consulta->bindParam(":usuario_id", $this->usuario->getId(), PDO::PARAM_INT);
             $consulta->execute();
 
             } catch (Exception $erro) {
@@ -60,5 +60,98 @@ final class Noticia {
 
 
 
+
+
+    public function getTitulo(): string
+    {
+        return $this->titulo;
+    }
+
+    public function setTitulo(string $titulo)
+    {
+        $this->titulo = filter_var($titulo, FILTER_SANITIZE_SPECIAL_CHARS);
+
+        return $this;
+    }
+
+    public function getTexto(): string
+    {
+        return $this->texto;
+    }
+
+
+    public function setTexto(string $texto)
+    {
+        $this->texto = filter_var($texto, FILTER_SANITIZE_SPECIAL_CHARS);
+
+        return $this;
+    }
+
+
+    public function getResumo(): string
+    {
+        return $this->resumo;
+    }
+
+
+    public function setResumo(string $resumo)
+    {
+        $this->resumo = filter_var($resumo, FILTER_SANITIZE_SPECIAL_CHARS);
+
+        return $this;
+    }
+
+
+    public function getImagem(): string
+    {
+        return $this->imagem;
+    }
+
+    public function setImagem(string $imagem)
+    {
+        $this->imagem = filter_var($imagem, FILTER_SANITIZE_SPECIAL_CHARS);
+
+        return $this;
+    }
+
+    public function getDestaque(): string
+    {
+        return $this->destaque;
+    }
+
+
+    public function setDestaque(string $destaque)
+    {
+        $this->destaque = filter_var($destaque, FILTER_SANITIZE_SPECIAL_CHARS);
+
+        return $this;
+    }
+
+
+    public function getCategoriaId(): int
+    {
+        return $this->categoriaId;
+    }
+
+
+    public function setCategoriaId(int $categoriaId)
+    {
+        $this->categoriaId = filter_var($categoriaId, FILTER_SANITIZE_NUMBER_INT);
+
+        return $this;
+    }
+
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function setId(int $id): self
+    {
+        $this->id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+
+        return $this;
+    }
 }
 

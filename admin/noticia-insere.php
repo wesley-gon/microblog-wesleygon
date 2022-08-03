@@ -5,11 +5,26 @@ use Microblog\Categoria;
 require_once "../inc/cabecalho-admin.php";
 
 $categoria = new Categoria;
-$listaDeCategorias  =$categoria->listar()
+$listaDeCategorias  =$categoria->listar();
 
 
 $noticia = new Noticia;
 
+if(isset($_POST['inserir'])){
+	$noticia = new Noticia;
+	$noticia->setTitulo($_POST['titulo']);
+	$noticia->setTexto($_POST['testo']);
+	$noticia->setResumo($_POST['resumo']);
+	$noticia->setDestaque($_POST['destaque']);
+	$noticia->setCategoriaId($_POST['categoria']);
+	$noticia->setImagem($_POST['imagem']);
+
+	/* aplicando o id do usário logado na sessão à propriedade id da classe/objeto Usuario */
+
+	$noticia->usuario->setId($_SESSION['id']);
+
+	Utilitarios::dump();
+}
 ?>
 
 
