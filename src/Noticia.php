@@ -30,6 +30,31 @@ final class Noticia {
         $this->conexao = $this->usuario->getConexao();
     }
 
+    public function inserir():void {
+        $sql = "INSERT INTO noticias(titulo, texto, resumo, imagem, destaque, usuario_id, cateoria_id)
+        VALUES(:titulo, :texto, :resumo, :imagem, :destaque, :usuario_id, :cateoria_id)";
+            try {
+            $consulta = $this->conexao->prepare($sql);
+            $consulta->bindParam(":titulo", $this->titulo, PDO::PARAM_STR);
+            $consulta->bindParam(":texto", $this->texto, PDO::PARAM_STR);
+            $consulta->bindParam(":resumo", $this->resumo, PDO::PARAM_STR);
+            $consulta->bindParam(":imagem", $this->imagem, PDO::PARAM_STR);
+            $consulta->bindParam(":destaque", $this->destaque, PDO::PARAM_STR);
+            $consulta->bindParam(":categoria_id", $this->categoria_Id, PDO::PARAM_INT);
+            
+
+            /* Aqui, primeiro chamamos o Getter de ID a partir do objeto/classe de Usuario. 
+            E só depois atribuimos ele ao parâmentro :usuario_id usando para isso o bindValue. 
+            Obs: bindParam pode ser usado, mas há riscos de erro devido a forma com oele é executado pelo PHP.
+            Por isso, recomenda-se o uso do bindValue em situações como essa.  */
+            
+            $consulta->bindParam(":usuario_id" $this->usuario->getId(), PDO::PARAM_INT )
+            $consulta->execute();
+
+            } catch (Exception $erro) {
+                die("Erro: ". $erro->getMessage());
+            }
+    }
 
 
 

@@ -4,9 +4,11 @@ use Microblog\Utilitarios;
 use Microblog\Categoria;
 require_once "../inc/cabecalho-admin.php";
 
-$noticia = new Noticia;
 $categoria = new Categoria;
+$listaDeCategorias  =$categoria->listar()
 
+
+$noticia = new Noticia;
 
 ?>
 
@@ -20,17 +22,20 @@ $categoria = new Categoria;
 				
 		<form class="mx-auto w-75" action="" method="post" id="form-inserir" name="form-inserir">
 
-<?php foreach($dados as $categoria) {  ?>
+
 
             <div class="mb-3">
                 <label class="form-label" for="categoria">Categoria:</label>
                 <select class="form-select" name="categoria" id="categoria" required>
 					<option value=""></option>
-					<option value=" <?=$categoria['nome']?>"> </option>
-					
+					<!-- Trazendo as catgorias do banco -->
+					<?php foreach($listaDeCategorias as $categoria) {  ?>  ?>
+					<option value="<?=$categoria['id']?>">
+					 <?=$categoria['nome']?> </option>
+					 <?php } ?>
 				</select>
 			</div>
-<?php } ?>
+
 			<div class="mb-3">
                 <label class="form-label" for="titulo">Título:</label>
                 <input class="form-control" required type="text" id="titulo" name="titulo" >
