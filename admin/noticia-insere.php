@@ -1,8 +1,13 @@
 <?php 
+use Microblog\Noticia;
+use Microblog\Utilitarios;
+use Microblog\Categoria;
 require_once "../inc/cabecalho-admin.php";
-use Microblog\ControleDeAcesso;
-$sessao = new ControleDeAcesso;
-$sessao->verificaAcessoAdmin();
+
+$noticia = new Noticia;
+$categoria = new Categoria;
+
+
 ?>
 
 
@@ -15,16 +20,17 @@ $sessao->verificaAcessoAdmin();
 				
 		<form class="mx-auto w-75" action="" method="post" id="form-inserir" name="form-inserir">
 
+<?php foreach($dados as $categoria) {  ?>
+
             <div class="mb-3">
                 <label class="form-label" for="categoria">Categoria:</label>
                 <select class="form-select" name="categoria" id="categoria" required>
 					<option value=""></option>
-					<option value="1">Ciência</option>
-					<option value="2">Educação</option>
-					<option value="3">Tecnologia</option>
+					<option value=" <?=$categoria['nome']?>"> </option>
+					
 				</select>
 			</div>
-
+<?php } ?>
 			<div class="mb-3">
                 <label class="form-label" for="titulo">Título:</label>
                 <input class="form-control" required type="text" id="titulo" name="titulo" >
