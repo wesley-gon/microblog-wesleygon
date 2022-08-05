@@ -1,5 +1,21 @@
 <?php 
+use Microblog\Noticia;
 require_once "../inc/cabecalho-admin.php";
+
+$noticias = new Noticia;
+
+/*  Capturando o id e o tipo de usuário logado e associando este valores às propriedas do objeto usuário */
+$noticia->usuario->setId($_SESSION['id']);
+$noticia->usuario->setTipo($_SESSION['tipo']);
+$noticia->listar();
+
+
+
+
+
+
+
+
 ?>
 
 

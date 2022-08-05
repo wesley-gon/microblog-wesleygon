@@ -91,7 +91,21 @@ final class Noticia {
     
 }
 
+    public function listar():array {
+        // Se o tipo de usuário logado for admin
+        if( $this->usuario->getTipo() === 'admin' ){
+            /* então ele poderá acessar as noticias de todo munod */
+            $sql = "";
+        } else{
+            /* Senão (ou seja, é um editor), este usuário (editor) poderá acessar somente suas próprias notícias
+        }
 
+
+        }
+
+
+
+    }
 
     public function getTitulo(): string
     {
