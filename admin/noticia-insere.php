@@ -17,13 +17,21 @@ if(isset($_POST['inserir'])){
 	$noticia->setResumo($_POST['resumo']);
 	$noticia->setDestaque($_POST['destaque']);
 	$noticia->setCategoriaId($_POST['categoria']);
-	$noticia->setImagem("uma imagem qualquer ");
-
 	/* aplicando o id do usário logado na sessão à propriedade id da classe/objeto Usuario */
-
 	$noticia->usuario->setId($_SESSION['id']);
 
-	Utilitarios::dump($noticia);
+	// capturando os dados do aqrquivo enviado
+	$imagem = $_FILES["imagem"];
+	
+
+	//função upolad (respons´vel por pegar o arquivo inteiro e enviar par ao HD do servidor)
+	$noticia->upload($imagem);
+
+	//Enviamos par o setter (epara o banco) SOMENTE a parte que se refere o nome/extensão dp aquivo
+	$noticia->setImagem($imagem['name']);
+
+
+	// Utilitarios::dump($imagem);
 }
 ?>
 
@@ -35,7 +43,7 @@ if(isset($_POST['inserir'])){
 		Inserir nova notícia
 		</h2>
 				
-		<form class="mx-auto w-75" action="" method="post" id="form-inserir" name="form-inserir">
+		<form enctype="multipart/form-data" class="mx-auto w-75" action="" method="post" id="form-inserir" name="form-inserir">
 
 
 

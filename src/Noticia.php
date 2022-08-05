@@ -56,8 +56,40 @@ final class Noticia {
     }
 
 
+    public function upload(array $arquivo) {
+        // Definindo os formatos aceitos
+        $tiposValidos = [
+            "image/png",
+            "image/jpeg",
+            "image/gif",
+            "image/svg+xml",
+        ];
+
+        if( !in_array($arquivo['type'], $tiposValidos) ){
+            die("
+                <script> alert('Formato Invalido!'); history.back(); </script>");
+
+        }
+        /* else {
+            die("<script>alert('Formato Valido!');history.back();</script>");
+        } */
+
+        //apenas acessando o nome do arquivo
+        $nome = $arquivo['name']; 
+
+        //Acessando os adados de acesso temporário
+        $temporario = $arquivo['tmp_name'];
+
+        //Definndo a pasta de destino junto com o nom e do arquivo
+        $destino = "../imagem/" .$nome;
+
+        // Usa,ps a fim~]ao abaixo para pegar da área temporária
+        // e enviar para a pasta de destino  (com o nome do arquivo)
+        move_uploaded_file($temporario, $destino);
 
 
+    
+}
 
 
 
