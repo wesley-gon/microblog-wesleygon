@@ -30,8 +30,8 @@ final class Noticia {
     }
 
     public function inserir():void {
-        $sql = "INSERT INTO noticias(titulo, texto, resumo, imagem, destaque, usuario_id, cateoria_id)
-        VALUES(:titulo, :texto, :resumo, :imagem, :destaque, :usuario_id, :cateoria_id)";
+        $sql = "INSERT INTO noticias(titulo, texto, resumo, imagem, destaque, usuario_id, categoria_id)
+        VALUES(:titulo, :texto, :resumo, :imagem, :destaque, :usuario_id, :categoria_id)";
             try {
             $consulta = $this->conexao->prepare($sql);
             $consulta->bindParam(":titulo", $this->titulo, PDO::PARAM_STR);
@@ -39,7 +39,7 @@ final class Noticia {
             $consulta->bindParam(":resumo", $this->resumo, PDO::PARAM_STR);
             $consulta->bindParam(":imagem", $this->imagem, PDO::PARAM_STR);
             $consulta->bindParam(":destaque", $this->destaque, PDO::PARAM_STR);
-            $consulta->bindParam(":categoria_id", $this->categoria_Id, PDO::PARAM_INT);
+            $consulta->bindParam(":categoria_id", $this->categoriaId, PDO::PARAM_INT);
             
 
             /* Aqui, primeiro chamamos o Getter de ID a partir do objeto/classe de Usuario. 

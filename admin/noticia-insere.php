@@ -32,6 +32,8 @@ if(isset($_POST['inserir'])){
 
 
 	// Utilitarios::dump($imagem);
+	$noticia->inserir();
+	header("location:noticias.php");
 }
 ?>
 

@@ -8,8 +8,8 @@ require_once "../inc/cabecalho-admin.php";
 $usuario = new Usuario;
 $listaDeUsuarios = $usuario->listar();
 
-$sessao = new ControleDeAcesso;
-$sessao->verificaAcessoAdmin();
+//$sessao = new ControleDeAcesso;
+//$sessao->verificaAcessoAdmin();
 
 // Utilitarios::dump($listaDeUsuarios)
 ?>

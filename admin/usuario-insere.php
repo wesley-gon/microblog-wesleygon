@@ -3,9 +3,9 @@ use Microblog\Usuario;
 
 require_once "../inc/cabecalho-admin.php";
 
-use Microblog\ControleDeAcesso;
-$sessao = new ControleDeAcesso;
-$sessao->verificaAcessoAdmin();
+//use Microblog\ControleDeAcesso;
+//$sessao = new ControleDeAcesso;
+//$sessao->verificaAcessoAdmin();
 
 
 if( isset($_POST['inserir']) ) {
