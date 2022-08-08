@@ -1,20 +1,18 @@
 <?php 
 use Microblog\Noticia;
+use Microblog\Utilitarios;
+use Microblog\Usuario;
+
 require_once "../inc/cabecalho-admin.php";
 
-$noticias = new Noticia;
+$noticia = new Noticia;
 
 /*  Capturando o id e o tipo de usuário logado e associando este valores às propriedas do objeto usuário */
 $noticia->usuario->setId($_SESSION['id']);
 $noticia->usuario->setTipo($_SESSION['tipo']);
-$noticia->listar();
 
-
-
-
-
-
-
+$listaDeNoticias=$noticia->listar();
+// Utilitarios::dump($listaDeNoticias);
 
 ?>
 
@@ -23,7 +21,7 @@ $noticia->listar();
 	<article class="col-12 bg-white rounded shadow my-1 py-4">
 		
 		<h2 class="text-center">
-		Notícias <span class="badge bg-dark">X</span>
+		Notícias <span class="badge bg-dark">  <?=count($listaDeNoticias)?></span>
 		</h2>
 
 		<p class="text-center mt-5">
@@ -39,30 +37,38 @@ $noticia->listar();
 					<tr>
                         <th>Título</th>
                         <th>Data</th>
-                        <th>Autor</th>
+                        <?php if($_SESSION['tipo'] === 'admin'){ ?><th> Autor</th> <?php } ?>
 						<th class="text-center">Operações</th>
 					</tr>
 				</thead>
 
 				<tbody>
-
+				<?php foreach($listaDeNoticias as $noticia){  ?> 
 					<tr>
-                        <td> Título da notícia... </td>
-                        <td> 21/12/2112 21:12 </td>
-                        <td> Autor da notícia... </td>
+                        <td> <?=$noticia['titulo']?> </td>
+                        <td> <?=Utilitarios::formataData($noticia['data'])?> </td>
+						<?php  if($_SESSION['tipo'] === 'admin'){ ?>
+						<!-- o dublo "?" Operador de coalescencia Nula:
+						na prática o valor chamado à esquerda pe exibido (desde que ele exista), caso contrário o valor a direita (mensagem) é exibido -->
+						<td> <?=$noticia['autor'] ?? " <i> Equipe Microblog </i>" ?> </td>
+
+				<?php } ?>
+		
+
+
 						<td class="text-center">
 							<a class="btn btn-warning" 
-							href="noticia-atualiza.php">
+							href="noticia-atualiza.php<?=$noticia['id']?>">
 							<i class="bi bi-pencil"></i> Atualizar
 							</a>
-						
+					
 							<a class="btn btn-danger excluir" 
-							href="noticia-exclui.php">
+							href="noticia-exclui.php<?=$noticia['id']?>">
 							<i class="bi bi-trash"></i> Excluir
 							</a>
 						</td>
 					</tr>
-
+				<?php } ?>
 				</tbody>                
 			</table>
 	</div>

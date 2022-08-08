@@ -93,19 +93,33 @@ final class Noticia {
 
     public function listar():array {
         // Se o tipo de usuário logado for admin
-        if( $this->usuario->getTipo() === 'admin' ){
-            /* então ele poderá acessar as noticias de todo munod */
-            $sql = "";
+        if( $this->usuario->getTipo() == 'admin' ){
+            /* então ele poderá acessar as noticias de TODO MUNDO */
+            $sql = "SELECT noticias.id, noticias.titulo, data, noticias.destaque, usuarios.nome AS autor FROM noticias LEFT JOIN usuarios ON noticias.usuario_id = .usuarios.id ORDER BY data DESC";
         } else{
-            /* Senão (ou seja, é um editor), este usuário (editor) poderá acessar somente suas próprias notícias
+           // Senão (ou seja, é um editor), este usuário (editor) poderá acessar somente suas próprias notícias
+            $sql ="SELECT id, titulo, data, destaque FROM noticias WHERE usuario_id = :usuario_id ORDER BY data DESC"; 
         }
 
-
+        try {
+            $consulta = $this->conexao->prepare($sql);
+            // Se não for usuário admin, então trate o parametro de usuário_id antes de executar
+            if ($this->usuario->getTipo() !== 'admin') {
+                $consulta->bindValue("usuario_id", $this->usuario->getId(),PDO::PARAM_INT);
+            }
+            $consulta->execute();
+            $resultado = $consulta->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $erro) {
+                die ("Erro: ". $erro->getMessage() );
         }
 
-
-
+        return $resultado;
+        //final do listar
     }
+
+
+
+    
 
     public function getTitulo(): string
     {
@@ -192,11 +206,12 @@ final class Noticia {
         return $this->id;
     }
 
-    public function setId(int $id): self
+    public function setId(int $id) 
     {
         $this->id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
 
         return $this;
     }
+
 }
 
